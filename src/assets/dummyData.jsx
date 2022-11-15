@@ -1,4 +1,4 @@
-export const  dummyShopData = [
+const  dummyShopData = [
   {
     id: 1,
     item: "Cannondale CAAD 13 Disc 105",
@@ -49,3 +49,42 @@ export const  dummyShopData = [
     
 
 ]
+
+const  dummyCategoryData = [
+
+  {
+    id: 1,
+    category: "Bike",
+    subcategory: ["Road Bike", "Mountain Bike", "Cyclocross Bike"],
+  },
+  {
+    id: 2,
+    category: "Clothing",
+    subcategory: ["Jersey", "Shorts", "Gloves"],
+  },
+  {
+    id: 3,
+    category: "Accessories",
+    subcategory: ["Helmet", "Glasses", "Saddle"],
+  },
+  {
+    id: 4,
+    category: "Components",
+    subcategory: ["Brakes", "Crankset", "Wheels"],
+  },
+  {
+    id: 5,
+    category: "Nutrition",
+    subcategory: ["Energy Bars", "Energy Gels", "Energy Drinks"],
+  },
+  {
+    id: 6,
+    category: "Tools",
+    subcategory: ["Pump", "Tire Levers", "Multi-Tools"],
+  },
+
+]
+
+export {  dummyShopData, dummyCategoryData  }; 
+
+

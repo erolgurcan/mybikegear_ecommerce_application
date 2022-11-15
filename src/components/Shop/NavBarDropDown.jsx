@@ -1,13 +1,16 @@
 import React from "react";
 import { useState } from "react";
-const NavBarDropDown = () => {
-  const [componentsClicked, setComponentsClicked] = useState(false);
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
+
+const NavBarDropDown = ( { category, subcategory, setActiveCataegory} ) => {
+  const [componentsClicked, setComponentsClicked] = useState(true);
 
   return (
     <>
       <li className="pb-3">
         <a
-          className="collapsed d-flex justify-content-between h3 text-decoration-none"
+          className="collapsed d-flex justify-content-between flex-row h3 text-decoration-none"
           href="#"
           onClick={() => {
             componentsClicked
@@ -15,9 +18,10 @@ const NavBarDropDown = () => {
               : setComponentsClicked(true);
           }}
         >
-          Components
-          <i className="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
+          {category}
+          <FontAwesomeIcon icon={faCircleChevronDown} />
         </a>
+
         <ul
           id="collapseTwo"
           className={
@@ -26,16 +30,24 @@ const NavBarDropDown = () => {
               : "collapse show list-unstyled pl-3"
           }
         >
-          <li>
-            <a className="text-decoration-none" href="#">
-              Sport
-            </a>
-          </li>
-          <li>
-            <a className="text-decoration-none" href="#">
-              Luxury
-            </a>
-          </li>
+
+           { subcategory.map((sub) => (
+                        <li key={sub.id}>
+                          <a className="text-decoration-none" href="#" onClick={
+                            () => {
+                              setActiveCataegory([
+                                category,
+                                sub,
+                              ])
+                            }
+                          }  >
+                            {sub}
+                          </a>
+                        </li>
+                      ))}
+                    
+
+
         </ul>
       </li>
     </>
