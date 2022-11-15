@@ -7,7 +7,6 @@ import {
 
 const ActiveCategory = ({activeCategory}) => {
 
-    console.log(activeCategory)
   return (
     <div className="col-md-6">
     <ul className="list-inline shop-top-menu pb-3 pt-1">
@@ -28,12 +27,12 @@ const ActiveCategory = ({activeCategory}) => {
                   className="h3 text-dark text-decoration-none mr-3"
                   href="#"
                 >
-                  {activeCategory[0]}  <FontAwesomeIcon icon={faArrowRight} /> 
+                  {activeCategory&& activeCategory[0]}  <FontAwesomeIcon icon={faArrowRight} /> 
                 </a>
               </li>
               <li className="list-inline-item">
                 <a className="h3 text-dark text-decoration-none" href="#">
-                {activeCategory[1]}
+                { activeCategory&& activeCategory[1]}
                 </a>
                 </li>
                 </>
