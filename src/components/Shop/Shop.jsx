@@ -12,6 +12,7 @@ const Shop = () => {
 
   const [activeCategory, setActiveCataegory] = useState([]);
   const [defaultBikeBrand, setDefaultBikeBrand] = useState("Trek");
+  const [activeProducts, setActiveProducts] = useState([]);
   console.log(activeCategory);
 
 
@@ -25,8 +26,15 @@ const Shop = () => {
         accept: 'application/json',
         Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50TmFtZSI6ImVyb2xndXJjYW4iLCJ2ZXJzaW9uIjoxLCJpYXQiOjE2NjkxNjgwODh9.q-p0alHlL3jvbvl_aW1mKf6CKMMNv0g1M5Iy8CFoKn0"
     }});
-    console.log(response);
+
+
+    setActiveProducts(response.data.items);
+
+
+
   };
+
+
 
 useEffect(() => {
     bikeData();
@@ -64,9 +72,9 @@ useEffect(() => {
                 </div>
               </div>
             </div>
-            <div className="d-flex ">
-              {dummyShopData.map((data, index) => (
-                <ShoppingCard key={index} data={data} />
+            <div className="row d-flex flew-wrap">
+              {activeProducts.map((data, index) => (
+                <ShoppingCard key={index} data={data}  />
               ))}
             </div>
           </div>
