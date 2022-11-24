@@ -24,7 +24,7 @@ const Shop = () => {
       },
       headers: {
         accept: 'application/json',
-        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50TmFtZSI6ImVyb2xndXJjYW4iLCJ2ZXJzaW9uIjoxLCJpYXQiOjE2NjkxNjgwODh9.q-p0alHlL3jvbvl_aW1mKf6CKMMNv0g1M5Iy8CFoKn0"
+        Authorization: "Bearer "
     }});
 
 
