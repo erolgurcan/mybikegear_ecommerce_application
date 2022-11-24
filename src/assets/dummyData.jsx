@@ -55,35 +55,43 @@ const  dummyCategoryData = [
   {
     id: 1,
     category: "Bike",
-    subcategory: ["Road Bike", "Mountain Bike", "Cyclocross Bike"],
+    // subcategory: [ "Road Bike", "Mountain Bike"],
+    subcategory: [
+      {
+        id: 1,
+        name: "Road Bike",
+        code: "road"
+      }]
   },
-  {
-    id: 2,
-    category: "Clothing",
-    subcategory: ["Jersey", "Shorts", "Gloves"],
-  },
-  {
-    id: 3,
-    category: "Accessories",
-    subcategory: ["Helmet", "Glasses", "Saddle"],
-  },
-  {
-    id: 4,
-    category: "Components",
-    subcategory: ["Brakes", "Crankset", "Wheels"],
-  },
-  {
-    id: 5,
-    category: "Nutrition",
-    subcategory: ["Energy Bars", "Energy Gels", "Energy Drinks"],
-  },
-  {
-    id: 6,
-    category: "Tools",
-    subcategory: ["Pump", "Tire Levers", "Multi-Tools"],
-  },
+  // {
+  //   id: 2,
+  //   category: "Clothing",
+  //   subcategory: ["Jersey", "Shorts", "Gloves"],
+  // },
+  // {
+  //   id: 3,
+  //   category: "Accessories",
+  //   subcategory: ["Helmet", "Glasses", "Saddle"],
+  // },
+  // {
+  //   id: 4,
+  //   category: "Components",
+  //   subcategory: ["Brakes", "Crankset", "Wheels"],
+  // },
+  // {
+  //   id: 5,
+  //   category: "Nutrition",
+  //   subcategory: ["Energy Bars", "Energy Gels", "Energy Drinks"],
+  // },
+  // {
+  //   id: 6,
+  //   category: "Tools",
+  //   subcategory: ["Pump", "Tire Levers", "Multi-Tools"],
+  // },
 
 ]
+
+
 
 export {  dummyShopData, dummyCategoryData  }; 
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-const NavBarDropDown = ( { category, subcategory, setActiveCataegory} ) => {
+const NavBarDropDown = ({ category, subcategory, setActiveCataegory }) => {
   const [componentsClicked, setComponentsClicked] = useState(true);
 
   return (
@@ -30,24 +30,19 @@ const NavBarDropDown = ( { category, subcategory, setActiveCataegory} ) => {
               : "collapse show list-unstyled pl-3"
           }
         >
-
-           { subcategory.map((sub) => (
-                        <li key={sub.id}>
-                          <a className="text-decoration-none" href="#" onClick={
-                            () => {
-                              setActiveCataegory([
-                                category,
-                                sub,
-                              ])
-                            }
-                          }  >
-                            {sub}
-                          </a>
-                        </li>
-                      ))}
-                    
-
-
+          {subcategory.map((sub) => (
+            <li key={sub.id}>
+              <a
+                className="text-decoration-none"
+                href="#"
+                onClick={() => {
+                  setActiveCataegory([category, sub.name, sub.code]);
+                }}
+              >
+                {sub.name}
+              </a>
+            </li>
+          ))}
         </ul>
       </li>
     </>

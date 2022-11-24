@@ -1,16 +1,37 @@
 import React from "react";
 import ShoppingCard from "./ShoppingCard";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBarDropDown from "./NavBarDropDown";
 import { dummyShopData } from "../../assets/dummyData";
 import { dummyCategoryData } from "../../assets/dummyData";
 import ActiveCategory from "./ActiveCategory";
-
+import { bikeCategoryData } from "../../assets/enumerateData/categoryData";
+import axios from "axios";
 
 const Shop = () => {
 
-  const [activeCategory, setActiveCataegory] = useState();
+  const [activeCategory, setActiveCataegory] = useState([]);
+  const [defaultBikeBrand, setDefaultBikeBrand] = useState("Trek");
   console.log(activeCategory);
+
+
+
+  const bikeData = async () => {
+    const response = await axios.get("https://api.99spokes.com/v1/bikes", {
+      params: {
+        q:  defaultBikeBrand + " " + activeCategory[2],
+      },
+      headers: {
+        accept: 'application/json',
+        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50TmFtZSI6ImVyb2xndXJjYW4iLCJ2ZXJzaW9uIjoxLCJpYXQiOjE2NjkxNjgwODh9.q-p0alHlL3jvbvl_aW1mKf6CKMMNv0g1M5Iy8CFoKn0"
+    }});
+    console.log(response);
+  };
+
+useEffect(() => {
+    bikeData();
+  }, [activeCategory]);
+
 
   return (
     <div>
