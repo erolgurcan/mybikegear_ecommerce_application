@@ -8,38 +8,36 @@ import ActiveCategory from "./ActiveCategory";
 import { bikeCategoryData } from "../../assets/enumerateData/categoryData";
 import axios from "axios";
 
+
+
 const Shop = () => {
+
+  const token = process.env.API_TOKEN 
+
+  console.log("token", token);
 
   const [activeCategory, setActiveCataegory] = useState([]);
   const [defaultBikeBrand, setDefaultBikeBrand] = useState("Trek");
   const [activeProducts, setActiveProducts] = useState([]);
   console.log(activeCategory);
 
-
-
   const bikeData = async () => {
     const response = await axios.get("https://api.99spokes.com/v1/bikes", {
       params: {
-        q:  defaultBikeBrand + " " + activeCategory[2],
+        q: defaultBikeBrand + " " + activeCategory[2],
       },
       headers: {
-        accept: 'application/json',
-        Authorization: "Bearer "
-    }});
-
+        accept: "application/json",
+        Authorization: "Bearer ",
+      },
+    });
 
     setActiveProducts(response.data.items);
-
-
-
   };
 
-
-
-useEffect(() => {
+  useEffect(() => {
     bikeData();
   }, [activeCategory]);
-
 
   return (
     <div>
@@ -61,7 +59,7 @@ useEffect(() => {
 
           <div className="col-lg-9">
             <div className="row">
-                <ActiveCategory activeCategory = {activeCategory} />
+              <ActiveCategory activeCategory={activeCategory} />
               <div className="col-md-6 pb-4">
                 <div className="d-flex">
                   <select className="form-control">
@@ -74,7 +72,7 @@ useEffect(() => {
             </div>
             <div className="row d-flex flew-wrap">
               {activeProducts.map((data, index) => (
-                <ShoppingCard key={index} data={data}  />
+                <ShoppingCard key={index} data={data} />
               ))}
             </div>
           </div>

@@ -2,8 +2,17 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { createArray } from "../../assets/helper/createArray";
+import axios from "axios";
 
 const ShoppingCard = ({ data }) => {
+
+
+
+  const [imgUrl, setImgUrl] = React.useState();
+  const [productInfo, setProductInfo] = React.useState([]);
+
+console.log(productInfo)
+
   const {
     buildKind,
     category,
@@ -20,13 +29,53 @@ const ShoppingCard = ({ data }) => {
   
   } = data;
 
-  console.log(data);
+  const productData =  axios.get(
+    `https://api.99spokes.com/v1/bikes/${id}`,
+    {
+      params: {
+        include: "images,prices"
+      },
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer `,
+      },
+    }
+  ).then((response) => {
+    // setImgUrl(response.data.images[0].url);
+    setProductInfo(response.data);
+
+  });
+
+
+
+
 
   return (
 
-      <div className="col-md-12" style={{ height: "300px", width: "300px" }}>
-        <div className="card mb-4 product-wap rounded-0">
+      <div className="col-lg-3 mb-2">
+        <div className="card mb-4 product-wap rounded" style={
+          {
+            minHeight: "100%"
+          }
+        } >
           <div className="card rounded-0">
+
+            {
+              imgUrl ? <img
+
+                className="card-img rounded-0 img-fluid"
+                src = {productInfo[0].images.url}
+                alt="product"
+
+
+              /> : <img
+                className="card-img rounded-0 img-fluid"
+                src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                alt="product"
+              />
+
+            }
+
             {/* <img
               className="card-img rounded-0 img-fluid"
               src={require("../../assets/images/img" )}
@@ -35,9 +84,12 @@ const ShoppingCard = ({ data }) => {
               <ul className="list-unstyled"></ul>
             </div>
           </div>
-          <div className="card-body">
+          <div className="card-body text-center ">
             <p href="shop-single.html" className="h4 text-decoration-none">
-               { maker + " " +  model}
+               { maker}
+            </p>
+            <p href="shop-single.html" className="h5 text-decoration-none">
+               { model}
             </p>
             <ul className="w-100 list-unstyled d-flex justify-content-between mb-0">
               {/* <li>{size.map((data, index) => data + " ")}</li> */}
