@@ -61,7 +61,13 @@ const  dummyCategoryData = [
         id: 1,
         name: "Road Bike",
         code: "road"
-      }]
+      },
+      {
+        id: 2,
+        name: "Mountain Bike",
+        code: "mountain"
+      }
+    ]
   },
   // {
   //   id: 2,

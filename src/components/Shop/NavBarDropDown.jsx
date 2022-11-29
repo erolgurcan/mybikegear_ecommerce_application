@@ -3,8 +3,20 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
 
-const NavBarDropDown = ({ category, subcategory, setActiveCataegory }) => {
+const NavBarDropDown = ({ category, subcategory, setActiveCataegory, products, setActiveProducts }) => {
   const [componentsClicked, setComponentsClicked] = useState(true);
+
+  const filterProduct = (category) => {
+
+    console.log(category);
+    const filteredProducts = products.filter((product) => {
+      return product.category === category;    });
+
+    console.log(filteredProducts);
+
+    setActiveProducts(filteredProducts);
+  };
+
 
   return (
     <>
@@ -35,8 +47,12 @@ const NavBarDropDown = ({ category, subcategory, setActiveCataegory }) => {
               <a
                 className="text-decoration-none"
                 href="#"
-                onClick={() => {
-                  setActiveCataegory([category, sub.name, sub.code]);
+                onClick={(e) => {
+
+                  filterProduct(sub.code);
+                  setActiveCataegory([category, sub.name]);
+
+
                 }}
               >
                 {sub.name}

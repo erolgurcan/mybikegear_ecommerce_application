@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGear, faStore, faMugHot, faFaceSmileBeam} from '@fortawesome/free-solid-svg-icons'
 import NavBar from "../NavBar/NavBar";
 
-const LandingPage = () => {
-  return (
+const LandingPage = ( {isAuth, setIsAuth} ) => {
+  return  (
     <div>
-        <NavBar />
+        <NavBar isAuth = {isAuth} setIsAuth = {setIsAuth} />
       <header class="masthead">
         <div class="container px-4 px-lg-5 h-100">
           <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
