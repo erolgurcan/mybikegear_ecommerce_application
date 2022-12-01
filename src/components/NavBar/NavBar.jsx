@@ -39,7 +39,7 @@ const NavBar = ({ isAuth, setIsAuth }) => {
                 </a>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/shop">
+                <Link className="nav-link" to="/shoping/all">
                   Shop
                 </Link>
               </li>

@@ -10,7 +10,7 @@ import axios from "axios";
 import ShoppingNavBar from "./ShoppingNavBar";
 import ShopFilter from "./ShopFilter";
 
-const Shop = ({ isAuth }) => {
+const Shop = ({ isAuth, setDetail }) => {
   const [activeCategory, setActiveCataegory] = useState([]);
   const [bikeBrand, setBikeBrand] = useState("Trek");
   const [products, setProducts] = useState([]);
@@ -138,6 +138,8 @@ const Shop = ({ isAuth }) => {
                     setIsLoading={setIsLoading}
                     setShopingBasket={setShopingBasket}
                     shopingBasket={shopingBasket}
+                    setDetail= {setDetail}
+
                   />
                 ))
               )}

@@ -8,50 +8,40 @@ import {
 import BasketModal from "../Shop/Modal/BasketModal";
 import userEvent from "@testing-library/user-event";
 
-const ShoppingNavBar = ( {products,setActiveProducts  } ) => {
 
+const ShoppingNavBar = ({ products, setActiveProducts }) => {
   const onClickHander = (e) => {
-
     e.preventDefault();
 
     const searchKey = document.getElementById("searchKey").value;
 
-    let filteretProducts = Array()
+    let filteretProducts = Array();
 
     products.forEach((product) => {
-
-      if (product.maker.toLowerCase().includes(searchKey.toLowerCase())
-        || product.model.toLowerCase().includes(searchKey.toLowerCase())
-        || product.category.toLowerCase().includes(searchKey.toLowerCase())
-        || product.subcategory.toLowerCase().includes(searchKey.toLowerCase())
-        || product.model.toLowerCase().includes(searchKey.toLowerCase())) {
-
+      if (
+        product.maker.toLowerCase().includes(searchKey.toLowerCase()) ||
+        product.model.toLowerCase().includes(searchKey.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchKey.toLowerCase()) ||
+        product.subcategory.toLowerCase().includes(searchKey.toLowerCase()) ||
+        product.model.toLowerCase().includes(searchKey.toLowerCase())
+      ) {
         filteretProducts.push(product);
-
       }
-
-
-
-    }
-
-
-    );
+    });
     setActiveProducts(filteretProducts);
-
-
-
-  }
+  };
 
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light shadow">
         <div className="container d-flex justify-content-between align-items-center">
-          <a
-            className="navbar-brand text-primary logo h1 align-self-center"
-            href="index.html"
-          >
-            My Bike Gear
-          </a>
+          <Link className="nav-item" to = "../../">        <img
+                  class="img-fluid"
+                  src={require("../../assets/images/img/logo.png")}
+                  alt="..."
+                  style={{"width": "50px"}}
+                /></Link>
+
 
           <button
             className="navbar-toggler border-0"
@@ -77,12 +67,13 @@ const ShoppingNavBar = ( {products,setActiveProducts  } ) => {
                     Home{" "}
                   </Link>
                 </li>
-
                 <li className="nav-item">
-                  <a className="nav-link" href="shop.html">
-                    Shop
-                  </a>
+                  <Link className="nav-link" to="/shoping/all">
+                    {" "}
+                    Shop{" "}
+                  </Link>
                 </li>
+
                 <li className="nav-item">
                   <a className="nav-link" href="contact.html">
                     Contact
@@ -111,7 +102,7 @@ const ShoppingNavBar = ( {products,setActiveProducts  } ) => {
                     type="search"
                     placeholder="Search"
                     aria-label="Search"
-                    id = "searchKey"
+                    id="searchKey"
                   />
                   <button className="btn btn-primary" onClick={onClickHander}>
                     Search

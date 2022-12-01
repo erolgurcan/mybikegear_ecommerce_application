@@ -3,8 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { createArray } from "../../assets/helper/createArray";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const ShoppingCard = ({ data , setShopingBasket, shopingBasket}) => {
+const ShoppingCard = ({ data , setShopingBasket, shopingBasket, setDetail}) => {
+
+  const navigate = useNavigate();
   const [imgUrl, setImgUrl] = React.useState();
   const [price, setPrice] = React.useState();
   const [toBasket, setToBasket] = React.useState([]);
@@ -52,14 +55,21 @@ const ShoppingCard = ({ data , setShopingBasket, shopingBasket}) => {
   };
 
   return (
-    <div className="col-lg-4 mb-2">
+    <div className="col-lg-4 mb-2"  >
       <div
         className="card mb-4 product-wap rounded"
         style={{
           minHeight: "80%",
         }}
       >
-        <div className="card rounded-0">
+        <div className="card rounded-0" onClick = {
+      () => {
+        
+        setDetail(data);
+        navigate("../product")
+        
+      }
+    }>
           {imgUrl ? (
             <img
               className="zoom card-img rounded-0 img-fluid"

@@ -4606,6 +4606,17 @@ textarea.form-control-lg {
   border-radius: calc(0.25rem - 1px);
 }
 
+
+.card-img-overlay:hover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem;
+  border-radius: calc(0.25rem - 1px);
+  background-color: #f4623a3d;;
+}
+
 .card-img,
 .card-img-top,
 .card-img-bottom {
