@@ -9,6 +9,8 @@ import { bikeCategoryData } from "../../assets/enumerateData/categoryData";
 import axios from "axios";
 import ShoppingNavBar from "./ShoppingNavBar";
 import ShopFilter from "./ShopFilter";
+import ShopContext from "../../context/ShopContext";
+import { useContext } from "react";
 
 const Shop = ({ isAuth, setDetail }) => {
   const [activeCategory, setActiveCataegory] = useState([]);
@@ -19,6 +21,17 @@ const Shop = ({ isAuth, setDetail }) => {
   const [maker, setMaker] = useState([]);
   const [category, setCategory] = useState([]);
   const [shopingBasket, setShopingBasket] = useState([]);
+
+
+  const bskContext = useContext(ShopContext);
+
+  const onRemoveHandler = (index) => {
+    console.log("onRemoveHandler");
+    let temp = shopingBasket;
+    temp.splice(index, 1);
+    setShopingBasket(temp);
+  };
+
 
   const bikeData = async () => {
     setIsLoading(true);
@@ -81,6 +94,9 @@ const Shop = ({ isAuth, setDetail }) => {
       <ShoppingNavBar
         products={products}
         setActiveProducts={setActiveProducts}
+        shopingBasket={shopingBasket}
+        setShopingBasket={setShopingBasket}
+        onRemoveHandler={onRemoveHandler}
       />
       <div className="container py-5">
         <div className="d-flex flex-wrap">
@@ -138,8 +154,7 @@ const Shop = ({ isAuth, setDetail }) => {
                     setIsLoading={setIsLoading}
                     setShopingBasket={setShopingBasket}
                     shopingBasket={shopingBasket}
-                    setDetail= {setDetail}
-
+                    setDetail={setDetail}
                   />
                 ))
               )}

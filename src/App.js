@@ -7,13 +7,16 @@ import Register from "./components/Register/Register";
 import ProductDetails from "./components/Shop/ProductDetails";
 import ShopRouter from "./components/Shop/ShopRouter";
 import { useState } from "react";
+import ContextProvider from "./context/ContextProvider";
 
 
 function App() {
 
   const [isAuth, setIsAuth] = useState(false);
   return (
-    <div>
+
+
+      <ContextProvider>
       <BrowserRouter>
 
         <Routes>
@@ -25,7 +28,8 @@ function App() {
           <Route path="/" element={<LandingPage isAuth = {isAuth}  setIsAuth = {setIsAuth}  />} />
         </Routes>
       </BrowserRouter>
-    </div>
+      </ContextProvider>
+
   );
 }
 

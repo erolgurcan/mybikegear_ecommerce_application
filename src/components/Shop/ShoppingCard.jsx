@@ -4,13 +4,18 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { createArray } from "../../assets/helper/createArray";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
-const ShoppingCard = ({ data , setShopingBasket, shopingBasket, setDetail}) => {
+import ShopContext from "../../context/ShopContext";
 
+const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
   const navigate = useNavigate();
   const [imgUrl, setImgUrl] = React.useState();
   const [price, setPrice] = React.useState();
   const [toBasket, setToBasket] = React.useState([]);
+  const [amount, setAmount] = React.useState(0);
+
+  const shpCtx = useContext(ShopContext);
 
   const { category, id, maker, model, subcategory } = data;
 
@@ -26,50 +31,80 @@ const ShoppingCard = ({ data , setShopingBasket, shopingBasket, setDetail}) => {
     })
     .then((response) => {
       setImgUrl(response.data.images[0].url);
-      setPrice(
-        response.data.prices[0].amount + " " + response.data.prices[0].currency
-      );
+      setPrice(response.data.prices[0].amount);
     });
 
-    const onChangeHandler = (e) => {
-     
-      let product = {
+  const onChangeHandler = (e) => {
+    if (e.target.value > 0) {
+      setAmount(e.target.value);
+
+      const product = {
         amount: e.target.value,
         maker: maker,
         model: model,
-        price: price,
+        price: Number(price),
         id: id,
-      }
+        imgUrl: imgUrl,
+      };
 
       setToBasket(product);
     }
+  };
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    console.log(amount)
+    if (amount > 0) {
+      shpCtx.addItem({
+        amount: amount,
+        maker: maker,
+        model: model,
+        price: Number(price),
+        id: id,
+        imgUrl: imgUrl,
+      });
+    }
+  };
 
   const onClickHandler = (e) => {
     e.preventDefault();
 
-    let basket = {
-      ...shopingBasket, ...toBasket
+    if (amount > 0) {
+      shpCtx.addItem({
+        amount: document.getElementById("amount").value,
+        maker: maker,
+        model: model,
+        price: Number(price),
+        id: id,
+        imgUrl: imgUrl,
+      });
     }
-    
-    setShopingBasket(basket);
+
+    let tempArr = Array();
+
+    tempArr = [...shopingBasket];
+
+    if (toBasket.amount > 0) {
+      tempArr.push(toBasket);
+      setShopingBasket(tempArr);
+    }
   };
 
   return (
-    <div className="col-lg-4 mb-2"  >
+    <div className="col-lg-4 mb-2">
       <div
         className="card mb-4 product-wap rounded"
         style={{
           minHeight: "80%",
         }}
       >
-        <div className="card rounded-0" onClick = {
-      () => {
-        
-        setDetail(data);
-        navigate("../product")
-        
-      }
-    }>
+        <div
+          className="card rounded-0"
+          onClick={() => {
+            setDetail(data);
+            navigate("../product");
+          }}
+        >
           {imgUrl ? (
             <img
               className="zoom card-img rounded-0 img-fluid"
@@ -99,6 +134,7 @@ const ShoppingCard = ({ data , setShopingBasket, shopingBasket, setDetail}) => {
             <li className="pt-2 mt-4">
               {createArray(5).map((data, index) => (
                 <FontAwesomeIcon
+                  key={index}
                   color={4 > index ? "green" : "grey"}
                   icon={faStar}
                 />
@@ -116,20 +152,23 @@ const ShoppingCard = ({ data , setShopingBasket, shopingBasket, setDetail}) => {
           </p>
           <p className="fs-5 ">
             {" "}
-            <strong>{price}</strong>
+            <strong>{price} CAD</strong>
           </p>
-          <form>
+          <form onSubmit={onSubmitHandler}>
             <div className="d-flex justify-content-center form-group">
               <input
                 min="0"
                 max="10"
                 className="col-lg-3 input-sm"
                 type="number"
-                onChange= {onChangeHandler}
+                defaultValue={0}
+                id="amount"
+                onChange={onChangeHandler}
               ></input>
               <button
                 className="btn btn-primary col-lg-3 m-2 "
-                onClick={onClickHandler}
+                // onClick={onClickHandler}
+                type= "submit"
               >
                 Add
               </button>

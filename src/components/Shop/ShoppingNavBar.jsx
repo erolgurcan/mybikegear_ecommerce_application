@@ -7,9 +7,19 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import BasketModal from "../Shop/Modal/BasketModal";
 import userEvent from "@testing-library/user-event";
+import { useContext } from "react";
+import ShopContext from "../../context/ShopContext";
 
+const ShoppingNavBar = ({
+  products,
+  setActiveProducts,
+  shopingBasket,
+  setShopingBasket,
+  onRemoveHandler,
+}) => {
 
-const ShoppingNavBar = ({ products, setActiveProducts }) => {
+  const bskContext = useContext(ShopContext);
+
   const onClickHander = (e) => {
     e.preventDefault();
 
@@ -35,13 +45,15 @@ const ShoppingNavBar = ({ products, setActiveProducts }) => {
     <div>
       <nav className="navbar navbar-expand-lg navbar-light shadow">
         <div className="container d-flex justify-content-between align-items-center">
-          <Link className="nav-item" to = "../../">        <img
-                  class="img-fluid"
-                  src={require("../../assets/images/img/logo.png")}
-                  alt="..."
-                  style={{"width": "50px"}}
-                /></Link>
-
+          <Link className="nav-item" to="../../">
+            {" "}
+            <img
+              className="img-fluid"
+              src={require("../../assets/images/img/logo.png")}
+              alt="..."
+              style={{ width: "50px" }}
+            />
+          </Link>
 
           <button
             className="navbar-toggler border-0"
@@ -118,12 +130,16 @@ const ShoppingNavBar = ({ products, setActiveProducts }) => {
               >
                 <FontAwesomeIcon icon={faCartShopping} />
                 <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                  99+
-                  <span className="visually-hidden">unread messages</span>
+                  {bskContext.items?.length}
+
                 </span>
               </button>
 
-              <BasketModal />
+              <BasketModal
+                shopingBasket={shopingBasket}
+                setShopingBasket={setShopingBasket}
+                onRemoveHandler={onRemoveHandler}
+              />
             </div>
           </div>
         </div>
