@@ -28,6 +28,7 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
       headers: {
         accept: "application/json",
         'Access-Control-Allow-Origin' : "*",
+        'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: "Bearer " + process.env.REACT_APP_API_TOKEN,
       },
     })
