@@ -26,7 +26,9 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
         include: "images,prices",
       },
       headers: {
-        accept: "application/json",
+        accept: "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "User-Agent": "PostmanRuntime/7.30.0",
         'Access-Control-Allow-Origin' : "*",
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: "Bearer " + process.env.REACT_APP_API_TOKEN,
