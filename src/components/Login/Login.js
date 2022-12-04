@@ -7,7 +7,7 @@ import ReactDOM from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const Login = ( {setIsAuth} ) => {
+const Login = ( {setIsAuth, setUser} ) => {
 
   const [isloading, setIsLoading] = useState(false);
 
@@ -36,6 +36,7 @@ const Login = ( {setIsAuth} ) => {
     .then((response) => {
       console.log(response);
       localStorage.setItem("token", response.data.token);
+      setUser(response.data.user);
       setIsLoading(false);
       setIsAuth(true);
       navigateTo();
@@ -53,25 +54,6 @@ const Login = ( {setIsAuth} ) => {
 
   };
 
-  // const IsAuth = async () => {
-  //   const result = await fetch(
-  //     "https://dinamo-anatolia.herokuapp.com/" + "auth/is-auth",
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         token: localStorage.token,
-  //       },
-  //     }
-  //   );
-
-  //   const resultParse = await result.json();
-  //   setIsAuth(true);
-  //   navigateTo();
-  // };
-
-  // useEffect(() => {
-  //   IsAuth();
-  // }, []);
 
   return (
     <>

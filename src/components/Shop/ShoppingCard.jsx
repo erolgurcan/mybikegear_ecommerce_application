@@ -14,6 +14,9 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
   const [price, setPrice] = React.useState();
   const [toBasket, setToBasket] = React.useState([]);
   const [amount, setAmount] = React.useState(0);
+  
+
+  
 
   const shpCtx = useContext(ShopContext);
 

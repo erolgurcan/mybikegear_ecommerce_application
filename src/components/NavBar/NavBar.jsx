@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 
-const NavBar = ({ isAuth, setIsAuth }) => {
+const NavBar = ({ isAuth, setIsAuth , user}) => {
   return (
     <div>
       <nav
@@ -70,11 +70,23 @@ const NavBar = ({ isAuth, setIsAuth }) => {
                   <FontAwesomeIcon icon={faUser} /> */}
               </li>
 
+              {
+                user?.userType ==="admin" ?
+                <li className="nav-item">
+                <Link className="nav-link" to="/admin">
+                  Admin
+                </Link>
+              </li>
+              :
+              null
+
+              }
+
 
               <li className="nav-item px-2">
                 {isAuth && (
                   <span className="nav-link">
-                    <FontAwesomeIcon icon={faUser} /> Erol Gurcan
+                    <FontAwesomeIcon icon={faUser} />  {user?.name}
                   </span>
                 )}
               </li>

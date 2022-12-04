@@ -8,10 +8,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import NavBar from "../NavBar/NavBar";
 
-const LandingPage = ({ isAuth, setIsAuth }) => {
+const LandingPage = ({ isAuth, setIsAuth, user }) => {
   return (
     <div>
-      <NavBar isAuth={isAuth} setIsAuth={setIsAuth} />
+      <NavBar isAuth={isAuth} setIsAuth={setIsAuth} user = {user} />
       <header className="masthead">
         <div className="container px-4 px-lg-5 h-100">
           <div className="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">

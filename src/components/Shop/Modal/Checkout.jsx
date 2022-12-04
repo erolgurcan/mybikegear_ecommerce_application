@@ -2,20 +2,60 @@ import React from "react";
 import ShoppingNavBar from "../ShoppingNavBar";
 import { useContext } from "react";
 import ShopContext from "../../../context/ShopContext";
+import axios from "axios";
+import OrderConfirmationModal from "./OrderConfirmationModal";
 
 const Checkout = () => {
   const bskCtx = useContext(ShopContext);
 
-    const orderHandler = () => {
+  const [isProcessing, setIsProcessing] = React.useState(false);
+  const [isOrdered, setIsOrdered] = React.useState(false);
 
-        const order = {
-            firstName: document.getElementById("firstName").value,
-        }
-    }
+  const orderHandler = async () => {
+    const order = {
+      firstName: document.getElementById("firstName").value,
+      lastName: document.getElementById("lastName").value,
+      email: document.getElementById("email").value,
+      address:
+        document.getElementById("address1").value +
+        " " +
+        document.getElementById("address2").value,
+      mobileNo: document.getElementById("mobileNo").value,
+      city: document.getElementById("city").value,
+      state: document.getElementById("state").value,
+      country: document.getElementById("country").value,
+      zip: document.getElementById("zip").value,
+      orderedItems: bskCtx.items,
+      total: bskCtx.totalAmount,
+      orderData: new Date(),
+      orderStatus: "Pending",
+      paymentMethod: document.querySelector('input[name="payment"]:checked')
+        .value,
+      paymentStatus: "Pending",
+      orderData: new Date(),
+    };
+
+    setIsProcessing(true);
+    const ordered = await axios
+      .post("http://localhost:5000/api/shop/add", order)
+      .then((res) => {
+
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    setInterval(() => {
+      setIsProcessing(false);
+      setIsOrdered(true);
+    }, 3000);
+  };
 
   return (
     <div>
       <ShoppingNavBar />
+
       <div className="container-fluid p-4">
         <div className="row px-xl-5">
           <div className="col-lg-8">
@@ -28,7 +68,7 @@ const Checkout = () => {
                     className="form-control"
                     type="text"
                     placeholder="John"
-                    id = "firstName"
+                    id="firstName"
                   />
                 </div>
                 <div className="col-md-6 form-group">
@@ -37,7 +77,7 @@ const Checkout = () => {
                     className="form-control"
                     type="text"
                     placeholder="Doe"
-                    id = "lastName"
+                    id="lastName"
                   />
                 </div>
                 <div className="col-md-6 form-group">
@@ -46,7 +86,7 @@ const Checkout = () => {
                     className="form-control"
                     type="text"
                     placeholder="example@email.com"
-                    id = "email"
+                    id="email"
                   />
                 </div>
                 <div className="col-md-6 form-group">
@@ -55,7 +95,7 @@ const Checkout = () => {
                     className="form-control"
                     type="text"
                     placeholder="+123 456 789"
-                    id = "mobile"
+                    id="mobileNo"
                   />
                 </div>
                 <div className="col-md-6 form-group">
@@ -64,7 +104,7 @@ const Checkout = () => {
                     className="form-control"
                     type="text"
                     placeholder="123 Street"
-                    id = "address1"
+                    id="address1"
                   />
                 </div>
                 <div className="col-md-6 form-group">
@@ -73,12 +113,12 @@ const Checkout = () => {
                     className="form-control"
                     type="text"
                     placeholder="123 Street"
-                    id = "address2"
+                    id="address2"
                   />
                 </div>
                 <div className="col-md-6 form-group">
                   <label>Country</label>
-                  <select className="custom-select">
+                  <select id="country" className="custom-select">
                     <option selected>Canada</option>
                     <option>United States</option>
                   </select>
@@ -88,6 +128,7 @@ const Checkout = () => {
                   <input
                     className="form-control"
                     type="text"
+                    id="city"
                     placeholder="New York"
                   />
                 </div>
@@ -97,6 +138,7 @@ const Checkout = () => {
                     className="form-control"
                     type="text"
                     placeholder="New York"
+                    id="state"
                   />
                 </div>
                 <div className="col-md-6 form-group">
@@ -105,6 +147,7 @@ const Checkout = () => {
                     className="form-control"
                     type="text"
                     placeholder="123"
+                    id="zip"
                   />
                 </div>
                 <div className="col-md-12 form-group">
@@ -116,23 +159,6 @@ const Checkout = () => {
                     />
                     <label className="custom-control-label" for="newaccount">
                       Create an account
-                    </label>
-                  </div>
-                </div>
-                <div className="col-md-12 form-group">
-                  <div className="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="shipto"
-                    />
-                    <label
-                      className="custom-control-label"
-                      for="shipto"
-                      data-toggle="collapse"
-                      data-target="#shipping-address"
-                    >
-                      Ship to different address
                     </label>
                   </div>
                 </div>
@@ -232,18 +258,19 @@ const Checkout = () => {
                 <h5 className="font-weight-medium mb-3">Products</h5>
 
                 {bskCtx.items.map((item, index) => (
-                  <div key = {index} className="d-flex justify-content-between">
+                  <div key={index} className="d-flex justify-content-between">
                     <p>{item.maker + " " + item.model} </p>
                     <p> {item.amount} </p>
                   </div>
                 ))}
 
-
-
                 <hr className="mt-0" />
                 <div className="d-flex justify-content-between mb-3 pt-1">
                   <h6 className="font-weight-medium">Subtotal</h6>
-                  <h6 className="font-weight-medium"> {bskCtx.totalAmount} CAD </h6>
+                  <h6 className="font-weight-medium">
+                    {" "}
+                    {bskCtx.totalAmount} CAD{" "}
+                  </h6>
                 </div>
                 <div className="d-flex justify-content-between">
                   <h6 className="font-weight-medium">Shipping</h6>
@@ -253,10 +280,20 @@ const Checkout = () => {
               <div className="card-footer border-secondary bg-transparent">
                 <div className="d-flex justify-content-between mt-2">
                   <h5 className="font-weight-bold">Total</h5>
-                  <h5 className="font-weight-bold"> { bskCtx.totalAmount + 50} CAD </h5>
+                  <h5 className="font-weight-bold">
+                    {" "}
+                    {bskCtx.totalAmount + 50} CAD{" "}
+                  </h5>
                 </div>
               </div>
             </div>
+
+            {isOrdered && (
+              <div className="alert alert-success" role="alert">
+                Your order has been placed successfully!
+              </div>
+            )}
+
             <div className="card border-secondary mb-5">
               <div className="card-header bg-secondary border-0">
                 <h4 className="font-weight-semi-bold m-0">Payment</h4>
@@ -302,10 +339,27 @@ const Checkout = () => {
                   </div>
                 </div>
               </div>
-              <div className="card-footer border-secondary bg-transparent">
-                <button onClick = {orderHandler}  className="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">
-                  Place Order
-                </button>
+              <div className="card-footer border-secondary bg-transparent text-center">
+                -
+                {!isProcessing ? (
+                  <button
+                    type="button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    onClick={orderHandler}
+                    className="btn btn-lg btn-block btn-primary text-center font-weight-bold my-3 py-3"
+                  >
+                    Place Order
+                  </button>
+                ) : (
+                  <>
+                    <div
+                      className="spinner-border text-center m-auto"
+                      role="status"
+                    ></div>
+                    <span> Processing... </span>
+                  </>
+                )}
               </div>
             </div>
           </div>
