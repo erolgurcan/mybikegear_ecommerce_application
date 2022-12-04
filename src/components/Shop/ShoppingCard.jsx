@@ -15,8 +15,9 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
   const [toBasket, setToBasket] = React.useState([]);
   const [amount, setAmount] = React.useState(0);
   
+  console.log("token",  process.env.REACT_APP_API_TOKEN);
 
-  
+
 
   const shpCtx = useContext(ShopContext);
 
