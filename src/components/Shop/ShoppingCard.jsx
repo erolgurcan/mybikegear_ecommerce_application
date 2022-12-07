@@ -36,6 +36,7 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
 
   const getData = async (id) => {
 
+    console.log(process.env.REACT_APP_API_TOKEN)
 
   await fetch(`https://api.99spokes.com/v1/bikes/${id}?include=images,prices`, { 
     method: "GET", 
