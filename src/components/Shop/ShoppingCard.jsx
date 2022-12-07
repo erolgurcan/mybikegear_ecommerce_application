@@ -19,8 +19,24 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
 
   const { category, id, maker, model, subcategory } = data;
 
-  const productData = axios
-    .get(`https://api.99spokes.com/v1/bikes/${id}`, {
+  // const productData = axios
+  //   .get(`https://api.99spokes.com/v1/bikes/${id}`, {
+  //     params: {
+  //       include: "images,prices",
+  //     },
+  //     headers: {
+  //       accept: 'application/json',
+  //       Authorization: "Bearer " + process.env.REACT_APP_API_TOKEN,
+  //     },
+  //   })
+  //   .then((response) => {
+  //     setImgUrl(response.data.images[0].url);
+  //     setPrice(response.data.prices[0].amount);
+  //   });
+
+
+    const productData = axios
+    .get(`http://localhost:5000/api/shop/${id}`, {
       params: {
         include: "images,prices",
       },
@@ -30,10 +46,10 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
       },
     })
     .then((response) => {
-      setImgUrl(response.data.images[0].url);
-      setPrice(response.data.prices[0].amount);
+      console.log(response.data)
+      setImgUrl(response.data[0].images[0].url);
+      setPrice(response.data[0].prices[0].amount);
     });
-
 
 
   const onChangeHandler = (e) => {
