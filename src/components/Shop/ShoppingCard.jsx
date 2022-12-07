@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { createArray } from "../../assets/helper/createArray";
@@ -15,29 +15,51 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
   const [toBasket, setToBasket] = React.useState([]);
   const [amount, setAmount] = React.useState(0);
 
-
   const shpCtx = useContext(ShopContext);
 
   const { category, id, maker, model, subcategory } = data;
 
-  const productData = axios
-    .get(`https://api.99spokes.com/v1/bikes/${id}`, {
-      params: {
-        include: "images,prices",
-      },
-      headers: {
-        accept: "*/*",
-        "Accept-Encoding": "gzip, deflate, br",
-        "User-Agent": "PostmanRuntime/7.30.0",
-        'Access-Control-Allow-Origin' : "*",
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: "Bearer " + process.env.REACT_APP_API_TOKEN,
-      },
-    })
-    .then((response) => {
-      setImgUrl(response.data.images[0].url);
-      setPrice(response.data.prices[0].amount);
+  // const productData = axios
+  //   .get(`https://api.99spokes.com/v1/bikes/${id}`, {
+  //     params: {
+  //       include: "images,prices",
+  //     },
+  //     headers: {
+  //       accept: 'application/json',
+  //       Authorization: "Bearer " + process.env.REACT_APP_API_TOKEN,
+  //     },
+  //   })
+  //   .then((response) => {
+  //     setImgUrl(response.data.images[0].url);
+  //     setPrice(response.data.prices[0].amount);
+  //   });
+
+  const getData = async (id) => {
+
+
+  await fetch(`https://api.99spokes.com/v1/bikes/${id}?include=images,prices`, { 
+    method: "GET", 
+    params: { 
+      include: "images,prices",
+    },
+    headers: {
+      accept: "application/json",
+      Authorization: "Bearer " + process.env.REACT_APP_API_TOKEN,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      setImgUrl(data.images[0].url); 
+      setPrice(data.prices[0].amount);
     });
+
+  }
+
+
+  useEffect(() => {
+    getData(id);
+  }, []);
+
 
   const onChangeHandler = (e) => {
     if (e.target.value > 0) {
@@ -58,7 +80,7 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    console.log(amount)
+    console.log(amount);
     if (amount > 0) {
       shpCtx.addItem({
         amount: amount,
@@ -173,7 +195,7 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
               <button
                 className="btn btn-primary col-lg-3 m-2 "
                 // onClick={onClickHandler}
-                type= "submit"
+                type="submit"
               >
                 Add
               </button>
