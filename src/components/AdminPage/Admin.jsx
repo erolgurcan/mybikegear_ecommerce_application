@@ -1,10 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import NavBar from "../NavBar/NavBar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash , faPen} from "@fortawesome/free-solid-svg-icons";
+import AdminModal from "./AdminModal";
 
 const Admin = () => {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [orderState, setOrderState] = useState(0);
 
   console.log(orders);
 
@@ -20,12 +24,31 @@ const Admin = () => {
       .then((data) => {
         setOrders(data);
       });
-  }, []);
+  }, [orderState]);
+
+
+
+
+  const deleteOrder = (id) => {
+    fetch(`http://localhost:5000/api/shop/auth/delete?id=${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setOrders(data);
+      });
+  };
 
   return (
     <div className="bg-dark p-4" style={{ minHeight: "1200px" }}>
       <NavBar />
 
+    <AdminModal  orderState={orderState} selectedOrder={selectedOrder}  setOrderState = {setOrderState} />
       <div className="row">
         <div className="col-lg-8 m-auto text-center">
           <h3 className="mt-5 text-light ">Admin Panel</h3>
@@ -45,6 +68,9 @@ const Admin = () => {
                 <th scope="col">Country</th>
                 <th scope="col">Total</th>
                 <th scope="">Items</th>
+                <th scope="col" >Payment Status</th>
+                <th scope="col">Delete</th>
+                <th scope="col">Update</th>
               </tr>
             </thead>
             <tbody>
@@ -67,6 +93,7 @@ const Admin = () => {
                     <td>{order.zip}</td>
                     <td>{order.country}</td>
                     <td>{order.total} CAD</td>
+
                     <td>
                       {" "}
                       {order.orderedItems.reduce(
@@ -74,52 +101,34 @@ const Admin = () => {
                         ""
                       )}{" "}
                     </td>
+                    <td>{order.paymentStatus}</td>
+                    <td>
+                      <button
+                        onClick={() => {
+                          deleteOrder(order._id);
+                        }}
+                        className="btn btn-danger"
+                      >
+                        <FontAwesomeIcon icon={faTrash}>
+                          Delete{" "}
+                        </FontAwesomeIcon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn btn-primary"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                      >
+                        <FontAwesomeIcon icon={faPen}/> 
+                      </button>
+                    </td>
                   </tr>
                 );
               })}
             </tbody>
           </table>
-        </div>
-        <div className="col-lg-4">
-          <h4 className="mt-2 text-light"> Pick Item </h4>
-
-          <form className="mt-4 col-lg-10 m-auto text-left">
-            <div className="mb-3">
-              <label
-                for="exampleInputEmail1 "
-                className="form-label text-light"
-              >
-                Email address
-              </label>
-              <input
-                className="form-control"
-                id="exampleInputEmail1"
-                placeholder={selectedOrder.email}
-              />
-              <label
-                for="exampleInputEmail1 "
-                className="form-label text-light"
-              >
-                Name
-              </label>
-              <input
-                className="form-control"
-                id="exampleInputEmail1"
-                placeholder={selectedOrder.firstName}
-              />
-                            <label
-                for="exampleInputEmail1 "
-                className="form-label text-light"
-              >
-                Last Name
-              </label>
-              <input
-                className="form-control"
-                id="exampleInputEmail1"
-                placeholder={selectedOrder.lastName}
-              />
-            </div>
-          </form>
         </div>
       </div>
     </div>

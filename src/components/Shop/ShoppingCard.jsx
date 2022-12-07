@@ -19,46 +19,21 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
 
   const { category, id, maker, model, subcategory } = data;
 
-  // const productData = axios
-  //   .get(`https://api.99spokes.com/v1/bikes/${id}`, {
-  //     params: {
-  //       include: "images,prices",
-  //     },
-  //     headers: {
-  //       accept: 'application/json',
-  //       Authorization: "Bearer " + process.env.REACT_APP_API_TOKEN,
-  //     },
-  //   })
-  //   .then((response) => {
-  //     setImgUrl(response.data.images[0].url);
-  //     setPrice(response.data.prices[0].amount);
-  //   });
-
-  const getData = async (id) => {
-
-
-  await fetch(`https://api.99spokes.com/v1/bikes/${id}?include=images,prices`, { 
-    method: "GET", 
-    params: { 
-      include: "images,prices",
-    },
-    headers: {
-      accept: "application/json",
-      Authorization: "Bearer " + process.env.REACT_APP_API_TOKEN,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      setImgUrl(data.images[0].url); 
-      setPrice(data.prices[0].amount);
+  const productData = axios
+    .get(`https://api.99spokes.com/v1/bikes/${id}`, {
+      params: {
+        include: "images,prices",
+      },
+      headers: {
+        accept: 'application/json',
+        Authorization: "Bearer " + process.env.REACT_APP_API_TOKEN,
+      },
+    })
+    .then((response) => {
+      setImgUrl(response.data.images[0].url);
+      setPrice(response.data.prices[0].amount);
     });
 
-  }
-
-  
-  useEffect(() => {
-    getData(id);
-  }, []);
 
 
   const onChangeHandler = (e) => {
