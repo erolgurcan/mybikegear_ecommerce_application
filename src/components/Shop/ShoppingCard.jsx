@@ -56,7 +56,7 @@ const ShoppingCard = ({ data, setShopingBasket, shopingBasket, setDetail }) => {
 
   }
 
-
+  
   useEffect(() => {
     getData(id);
   }, []);
